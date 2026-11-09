@@ -1,0 +1,8 @@
+{
+  "appId": "com.bigstargames.guildofash",
+  "appName": "Guild of Ash",
+  "webDir": "www",
+  "backgroundColor": "#0b0a0d",
+  "android": { "allowMixedContent": false },
+  "plugins": { "SplashScreen": { "launchAutoHide": true, "backgroundColor": "#0b0a0d" } }
+}
