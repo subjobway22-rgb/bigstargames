@@ -69,7 +69,7 @@ function viewQuest() {
   const big = foeReg.mon === 'lord' || foeBoss;
   return `<div class="scene">${scene(Math.floor(f.f / 10))}
       <div class="tag">${foeBoss ? `<b>${t('boss')}</b>${bossName}` : ''} ${t('stage_of', { r: rname(foeReg), s: f.f % 10 + 1 })}</div>
-      <div class="party">${party}</div><div class="foe ${big ? 'big' : ''}" id="foe">${enemy(foeReg.mon, foeReg.hue, foeBoss)}</div><div id="fx"></div></div>
+      <div class="party">${party}</div><div class="foe ${big ? 'big' : ''}" id="foe">${enemy(foeReg.mon, foeReg.hue, foeBoss, Math.min(12, Math.floor(f.f / 10) + 1))}</div><div id="fx"></div></div>
     <div class="bar"><i id="prog"></i></div>
     ${f.stalled ? `<div class="warn">⚠ ${t('stalled')} (${t('power')} ${fmt(P)} / ${fmt(G.enemyPower(S.stage) * .7)})</div>` : ''}
     <div class="kv"><span>${t('power')}</span><b>${fmt(P)}</b></div>

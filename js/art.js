@@ -60,10 +60,13 @@ export function portrait(a, size = 96) {
   const bg = `<defs><radialGradient id="g${a.id}" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="${a.rar ? rar.color : '#2c2832'}" stop-opacity="${a.rar ? .35 : 1}"/><stop offset="1" stop-color="#0e0c11"/></radialGradient></defs>
     <rect width="100" height="120" rx="8" fill="url(#g${a.id})"/>
     <g stroke="${ring}" stroke-opacity=".7" fill="none"><circle cx="50" cy="60" r="${54}" stroke-width="${a.rar > 1 ? 1.6 : .8}"/>${ticks}</g>`;
-  return `<svg class="portrait" viewBox="0 0 100 120" width="${size}" height="${size * 1.2}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${a.name}">
+  const svgP = `<svg class="portrait" viewBox="0 0 100 120" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${a.name}">
     <clipPath id="c${a.id}"><rect width="100" height="120" rx="8"/></clipPath><g clip-path="url(#c${a.id})">
     ${bg}${back}${body}${sigil}${head}${scarSvg}${face}${eyes}${hair}${third}${front}</g>
     <rect width="100" height="120" rx="8" fill="none" stroke="${ring}" stroke-width="2"/></svg>`;
+  const n = (a.seed >>> 0) % 3 + 1;
+  const img = `<img src="art/hero_${cls}_${n}.png" alt="" loading="lazy" onload="this.previousElementSibling.style.visibility='hidden'" onerror="this.remove()">`;
+  return `<span class="pw" style="--rc:${ring};width:${size}px">${svgP}${img}</span>`;
 }
 
 /* ---------------- Enemies ---------------- */
@@ -104,19 +107,23 @@ const E = {
 };
 const PAL = { m: '#5b2a30', d: '#2c1418', e: '#ff3b2f' };
 
-export function enemy(type, hue, boss) {
+export function enemy(type, hue, boss, regionNo = 0) {
   const fn = E[type] || E.imp;
   const aura = boss ? `<circle cx="60" cy="64" r="56" fill="none" stroke="#8c1d2b" stroke-opacity=".5" stroke-width="2" stroke-dasharray="3 6"/>` : '';
-  return `<svg class="enemy ${boss ? 'boss' : ''}" viewBox="-6 -6 132 132" xmlns="http://www.w3.org/2000/svg" style="filter:hue-rotate(${hue}deg)">${aura}${fn(PAL)}</svg>`;
+  const src = boss && regionNo ? `art/boss_${String(regionNo).padStart(2, '0')}.png` : `art/foe_${type}.png`;
+  const fb = boss && regionNo ? `art/foe_${type}.png` : '';
+  return `<div class="ew"><svg class="enemy ${boss ? 'boss' : ''}" viewBox="-6 -6 132 132" xmlns="http://www.w3.org/2000/svg" style="filter:hue-rotate(${hue}deg)">${aura}${fn(PAL)}</svg>`
+    + `<img src="${src}" alt="" onload="this.previousElementSibling.style.visibility='hidden'" onerror="${fb ? `this.onerror=function(){this.remove()};this.src='${fb}'` : 'this.remove()'}"></div>`;
 }
 
 export function scene(regionIdx) {
   const t = regionIdx % 12;
+  const bgImg = `<img class="bgimg" src="art/bg_${String(t + 1).padStart(2, '0')}.jpg" alt="" onload="this.previousElementSibling.style.visibility='hidden'" onerror="this.remove()">`;
   const trees = Array.from({ length: 7 }, (_, i) => { const x = 20 + i * 52 + (t * 13 % 17), h = 50 + (i * 37 + t * 11) % 40;
     return `<path d="M${x} 150L${x - 6} ${150 - h}L${x - 2} ${150 - h}L${x - 9} ${150 - h * .6}L${x + 9} ${150 - h * .6}L${x + 2} ${150 - h}L${x + 6} ${150 - h}Z" fill="#0b0a0d" opacity="${.5 + (i % 3) * .15}"/>`; }).join('');
   return `<svg class="bgscene" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
     <defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16101a"/><stop offset=".7" stop-color="#3a1a22"/><stop offset="1" stop-color="#1a1214"/></linearGradient></defs>
     <rect width="360" height="200" fill="url(#sk)" style="filter:hue-rotate(${t * 28}deg)"/>
     <circle cx="270" cy="50" r="26" fill="#d8cfb8" opacity=".75"/><circle cx="280" cy="44" r="24" fill="#16101a" opacity=".55"/>
-    ${trees}<rect y="150" width="360" height="50" fill="#0b0a0d"/><path d="M0 150Q90 140 180 152T360 148V160H0Z" fill="#17131a"/></svg>`;
+    ${trees}<rect y="150" width="360" height="50" fill="#0b0a0d"/><path d="M0 150Q90 140 180 152T360 148V160H0Z" fill="#17131a"/></svg>${bgImg}`;
 }
