@@ -57,9 +57,9 @@ export function portrait(a, size = 96) {
   // ---- rarity ornaments ----
   const ticks = Array.from({ length: 12 }, (_, i) => `<line x1="50" y1="2" x2="50" y2="${a.rar > 1 ? 7 : 5}" transform="rotate(${i * 30} 50 60)"/>`).join('');
   const third = a.rar === 3 ? `<path d="M44 38Q50 33 56 38Q50 43 44 38Z" fill="#14110f" stroke="${rar.color}" stroke-width=".8"/><circle cx="50" cy="38" r="1.6" fill="#ff3b2f"/>` : '';
-  const bg = `<defs><radialGradient id="g${a.id}" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#fbf8ff"/><stop offset="1" stop-color="${a.rar ? rar.color : '#c9bff0'}" stop-opacity="${a.rar ? .55 : 1}"/></radialGradient></defs>
+  const bg = `<defs><radialGradient id="g${a.id}" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="${a.rar ? rar.color : '#2c2832'}" stop-opacity="${a.rar ? .35 : 1}"/><stop offset="1" stop-color="#0e0c11"/></radialGradient></defs>
     <rect width="100" height="120" rx="8" fill="url(#g${a.id})"/>
-    <path d="M14 16l1.6 4 4 1.6-4 1.600-1.600 4-1.600-4-4-1.600 4-1.600zM84 30l1.200 3 3 1.200-3 1.200-1.200 3-1.200-3-3-1.200 3-1.200z" fill="#fff" opacity=".95"/><g stroke="#fff" stroke-opacity=".9" fill="none"><circle cx="50" cy="60" r="${54}" stroke-width="${a.rar > 1 ? 1.6 : .8}"/>${ticks}</g>`;
+    <g stroke="${ring}" stroke-opacity=".7" fill="none"><circle cx="50" cy="60" r="${54}" stroke-width="${a.rar > 1 ? 1.6 : .8}"/>${ticks}</g>`;
   const svgP = `<svg class="portrait" viewBox="0 0 100 120" style="width:100%;height:auto" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${a.name}">
     <clipPath id="c${a.id}"><rect width="100" height="120" rx="8"/></clipPath><g clip-path="url(#c${a.id})">
     ${bg}${back}${body}${sigil}${head}${scarSvg}${face}${eyes}${hair}${third}${front}</g>
@@ -120,10 +120,10 @@ export function scene(regionIdx) {
   const t = regionIdx % 12;
   const bgImg = `<img class="bgimg" src="art/bg_${String(t + 1).padStart(2, '0')}.jpg" alt="" onload="this.previousElementSibling.style.visibility='hidden'" onerror="this.remove()">`;
   const trees = Array.from({ length: 7 }, (_, i) => { const x = 20 + i * 52 + (t * 13 % 17), h = 50 + (i * 37 + t * 11) % 40;
-    return `<path d="M${x} 150L${x - 6} ${150 - h}L${x - 2} ${150 - h}L${x - 9} ${150 - h * .6}L${x + 9} ${150 - h * .6}L${x + 2} ${150 - h}L${x + 6} ${150 - h}Z" fill="#3b2a78" opacity="${.35 + (i % 3) * .12}"/>`; }).join('');
+    return `<path d="M${x} 150L${x - 6} ${150 - h}L${x - 2} ${150 - h}L${x - 9} ${150 - h * .6}L${x + 9} ${150 - h * .6}L${x + 2} ${150 - h}L${x + 6} ${150 - h}Z" fill="#0b0a0d" opacity="${.5 + (i % 3) * .15}"/>`; }).join('');
   return `<svg class="bgscene" viewBox="0 0 360 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8f7bf0"/><stop offset=".6" stop-color="#e4b6ff"/><stop offset="1" stop-color="#ffd3e6"/></linearGradient></defs>
-    <rect width="360" height="200" fill="url(#sk)" style="filter:hue-rotate(${(t * 23) % 70 - 20}deg)"/>
-    <circle cx="270" cy="52" r="24" fill="#fff8e8" opacity=".95"/><circle cx="280" cy="46" r="22" fill="#cdb8ff" opacity=".7"/><path d="M60 30l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM170 60l1.500 4 4 1.500-4 1.500-1.500 4-1.500-4-4-1.500 4-1.500zM320 20l1.500 4 4 1.500-4 1.500-1.500 4-1.500-4-4-1.500 4-1.500z" fill="#fff"/>
-    ${trees}<rect y="150" width="360" height="50" fill="#5a43b8"/><path d="M0 150Q90 140 180 152T360 148V160H0Z" fill="#7a63d6"/></svg>${bgImg}`;
+    <defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16101a"/><stop offset=".7" stop-color="#3a1a22"/><stop offset="1" stop-color="#1a1214"/></linearGradient></defs>
+    <rect width="360" height="200" fill="url(#sk)" style="filter:hue-rotate(${t * 28}deg)"/>
+    <circle cx="270" cy="50" r="26" fill="#d8cfb8" opacity=".75"/><circle cx="280" cy="44" r="24" fill="#16101a" opacity=".55"/>
+    ${trees}<rect y="150" width="360" height="50" fill="#0b0a0d"/><path d="M0 150Q90 140 180 152T360 148V160H0Z" fill="#17131a"/></svg>${bgImg}`;
 }

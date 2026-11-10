@@ -1,9 +1,9 @@
 // Static game data. No network needed.
 export const RARITY = [
-  { id: 'C', mul: 1.0, cost: 1.0, price: 40,   wage: 1.0, color: '#9a95b8' },
-  { id: 'R', mul: 1.8, cost: 1.6, price: 170,  wage: 1.8, color: '#4f9be0' },
-  { id: 'E', mul: 3.2, cost: 2.6, price: 900,  wage: 3.2, color: '#a56cf0' },
-  { id: 'L', mul: 6.0, cost: 4.0, price: 4800, wage: 6.0, color: '#f2b53a' },
+  { id: 'C', mul: 1.0, cost: 1.0, price: 40,   wage: 1.0, color: '#6b6670' },
+  { id: 'R', mul: 1.8, cost: 1.6, price: 170,  wage: 1.8, color: '#5d7fa3' },
+  { id: 'E', mul: 3.2, cost: 2.6, price: 900,  wage: 3.2, color: '#8a4fbf' },
+  { id: 'L', mul: 6.0, cost: 4.0, price: 4800, wage: 6.0, color: '#c9a13b' },
 ];
 
 // pw: power mul, gd: bonus gold share, up: wage mul, sl: soul chance bonus
