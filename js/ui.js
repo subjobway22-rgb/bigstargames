@@ -1,7 +1,7 @@
 import * as G from './game.js';
 import { RARITY, REGIONS, ABYSS } from './data.js';
 import { portrait, enemy, scene } from './art.js';
-import { t, setLang, getLang } from './i18n.js';
+import { t, setLang, getLang, LANGS } from './i18n.js';
 import { showRewarded } from './ads.js';
 import * as Sync from './sync.js';
 import { initAdMob } from './admob.js';
@@ -46,7 +46,7 @@ async function watch(kind, placement) {
 const adLabel = (kind) => t('ad_left', { n: Math.max(0, G.adLeft(S, kind, Date.now())) });
 
 /* ---------- guild receptionist (mascot) ---------- */
-const FACE = { idle: 'face1', happy: 'face2', cheer: 'face3', worry: 'face4', shy: 'face5', sleep: 'face6' };
+const FACE = { idle: 'cheer', happy: 'cheer', cheer: 'cheer', worry: 'worry', shy: 'shy', sleep: 'sleep' };
 let force = null;
 function curMood() {
   const now = Date.now();
@@ -131,8 +131,6 @@ function viewMore() {
   return `<div class="hero"><img src="art/mascot_full.webp" alt=""><div><div class="nm">Guild of Ash</div><div class="sub">${t('mas_idle1')}</div></div></div><h3>${t('prestige')}</h3>
     <div class="card"><div class="info"><div class="sub">${can ? t('prestige_t', { n: G.prestigeGain(S) }) : t('prestige_na')}</div></div>
     <div class="acts"><button class="b ${can ? 'red' : 'off'}" data-act="prestige">${t('prestige')}</button></div></div>
-    <h3>${t('lang')}</h3>
-    <select id="lang"><option value="auto">Auto</option><option value="ko">한국어</option><option value="en">English</option></select>
     <h3>${t('cloud')}</h3>
     <div class="kv"><span>${t('cloud_on')}</span><input type="checkbox" id="sync" style="width:auto" ${S.set.sync ? 'checked' : ''}></div>
     <div class="row"><button class="b" data-act="up">${t('cloud_up')}</button><button class="b" data-act="down">${t('cloud_down')}</button></div>
@@ -156,7 +154,6 @@ function render() {
   if (tab === 'recruit' && !S.pool.length) G.refreshPool(S);
   renderTabs();
   $('#view').innerHTML = VIEWS[tab]();
-  if (tab === 'more') $('#lang').value = S.set.lang;
   updateHud(); updateAfford();
 }
 function updateHud() {
@@ -205,9 +202,28 @@ document.addEventListener('click', async (e) => {
   save(); render();
 });
 document.addEventListener('change', (e) => {
-  if (e.target.id === 'lang') { S.set.lang = e.target.value; setLang(S.set.lang); save(); render(); }
   if (e.target.id === 'sync') { S.set.sync = e.target.checked; save(); }
 });
+
+/* ---------- language picker (top-right) ---------- */
+const SHORT = { 'zh-TW': '繁' };
+function applyLang() {
+  const c = getLang(), b = $('#langcode'); if (b) b.textContent = SHORT[c] || c.toUpperCase();
+  const btn = $('#langbtn'); if (btn) btn.title = t('lang');
+}
+function openLangDialog() {
+  const m = $('#modal'), cur = getLang(); m.hidden = false;
+  m.innerHTML = `<div class="mbox"><h3>${t('lang')}</h3><div class="langgrid">${LANGS.map(l =>
+    `<button class="b ${l.code === cur ? 'red' : ''}" data-lang="${l.code}">${l.name}</button>`).join('')}</div>
+    <div class="row"><button class="b" data-lang="">${t('cancel')}</button></div></div>`;
+  m.onclick = (e) => {
+    const b = e.target.closest('[data-lang]');
+    if (!b) { if (e.target === m) m.hidden = true; return; }
+    m.hidden = true;
+    if (b.dataset.lang) { S.set.lang = b.dataset.lang; setLang(S.set.lang); save(); applyLang(); render(); }
+  };
+}
+document.addEventListener('click', (e) => { if (e.target.closest('#langbtn')) openLangDialog(); });
 
 /* ---------- loop ---------- */
 function tick() {
@@ -222,7 +238,7 @@ function tick() {
   if (S.stage !== st0 && tab === 'quest') render(); else { updateHud(); updateAfford(); }
 }
 function start() {
-  S = load() || G.newState(); setLang(S.set.lang);
+  S = load() || G.newState(); setLang(S.set.lang); applyLang();
   const now = Date.now();
   const away = Math.min((now - S.t) / 1000, G.OFFLINE_CAP);
   lastFrame = now;
@@ -231,7 +247,7 @@ function start() {
   render(); save();
   if (off) {
     const body = t('offline_b', { h: dur(off.away), c: off.o.clears, g: fmt(off.o.gold), s: off.o.souls });
-    modal(`<img class="mface big" src="art/mascot_face6.webp" alt=""><h3>${t('offline_t')}</h3><p>${t('mas_off')}</p><p>${body}</p>`, [
+    modal(`<img class="mface big" src="art/mascot_sleep.webp" alt=""><h3>${t('offline_t')}</h3><p>${t('mas_off')}</p><p>${body}</p>`, [
       { label: t('claim') },
       { label: t('offline_ad') + ' · ' + adLabel('offline'), cls: 'ad', fn: async () => { if (G.adLeft(S, 'offline', Date.now()) <= 0) return toast(t('ad_none')); if (await showRewarded('offline')) { G.adGrant(S, 'offline', Date.now(), off.o); save(); render(); } } },
     ]);
