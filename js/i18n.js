@@ -22,6 +22,10 @@ const D = {
     cls_warrior: '전사', cls_rogue: '도적', cls_mage: '마도사', cls_priest: '성직자', cls_heretic: '이단자',
     r_C: '일반', r_R: '희귀', r_E: '영웅', r_L: '전설',
     cls_info_warrior: '높은 전투력', cls_info_rogue: '골드 +10%', cls_info_mage: '매우 높은 전투력 · 급여↑', cls_info_priest: '급여↓ · 영혼 획득↑', cls_info_heretic: '영혼 획득↑↑',
+    mas_name: '접수원', mas_idle1: '길드는 오늘도 평화로워요. 모험가들이 열심히 싸우는 중!', mas_idle2: '골드가 모이면 강화부터 해볼까요?', mas_idle3: '급여가 아까운 모험가는 퇴출도 방법이에요…',
+    mas_stalled: '보스가 너무 세요! 조금 더 강화하고 다시 도전해요.', mas_boost: '골드 2배 중! 지금이 기회예요 ✦', mas_boss: '보스를 쓰러뜨렸어요! 대단해요!',
+    mas_hire: '새 모험가가 합류했어요! 잘 부탁드려요.', mas_summon: '영혼의 부름에 응답했어요… 굉장한 분이에요!', mas_fire: '…떠나보냈어요. 길드 살림은 조금 나아졌네요.', mas_guild: '길드가 커졌어요! 슬롯이 늘었을지도?',
+    mas_off: '쿨… 쿨… 길드를 지키며 졸고 있었어요.', mas_recruit: '지원자들이 문 앞에 줄을 서 있어요!',
     abyss: '끝없는 심연', stage_of: '{r} · {s}/10',
   },
   en: {
@@ -47,6 +51,10 @@ const D = {
     cls_warrior: 'Warrior', cls_rogue: 'Rogue', cls_mage: 'Mage', cls_priest: 'Priest', cls_heretic: 'Heretic',
     r_C: 'Common', r_R: 'Rare', r_E: 'Epic', r_L: 'Legend',
     cls_info_warrior: 'High power', cls_info_rogue: 'Gold +10%', cls_info_mage: 'Very high power · wages↑', cls_info_priest: 'Wages↓ · souls↑', cls_info_heretic: 'Souls↑↑',
+    mas_name: 'Receptionist', mas_idle1: 'All quiet at the guild. The adventurers are hard at work!', mas_idle2: 'Got gold? Enhance someone!', mas_idle3: 'If wages hurt, dismissing is an option…',
+    mas_stalled: 'That boss is too strong! Enhance a bit more first.', mas_boost: '2× gold is on! Make the most of it ✦', mas_boss: 'The boss is down! Amazing!',
+    mas_hire: 'A new adventurer joined! Please take care of them.', mas_summon: 'A soul answered the call… what a presence!', mas_fire: '…They have left. The budget looks a bit better.', mas_guild: 'The guild grew! Maybe more slots?',
+    mas_off: 'Zzz… I dozed off guarding the guild.', mas_recruit: 'Applicants are lining up at the door!',
     abyss: 'Endless Abyss', stage_of: '{r} · {s}/10',
   },
 };

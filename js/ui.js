@@ -45,6 +45,29 @@ async function watch(kind, placement) {
 }
 const adLabel = (kind) => t('ad_left', { n: Math.max(0, G.adLeft(S, kind, Date.now())) });
 
+/* ---------- guild receptionist (mascot) ---------- */
+const FACE = { idle: 'face1', happy: 'face2', cheer: 'face3', worry: 'face4', shy: 'face5', sleep: 'face6' };
+let force = null;
+function curMood() {
+  const now = Date.now();
+  if (force && force.until > now) return force;
+  if (G.fight(S).stalled) return { mood: 'worry', key: 'mas_stalled' };
+  if (S.boostUntil > now) return { mood: 'cheer', key: 'mas_boost' };
+  return { mood: 'idle', key: 'mas_idle' + (Math.floor(now / 20000) % 3 + 1) };
+}
+function say(key, mood, ms = 4500) { force = { mood, key, until: Date.now() + ms }; updateMascot(); }
+function mascotHtml(mood, key) {
+  const m = key ? { mood, key } : curMood();
+  return `<div class="mascot" id="mas"><img id="masimg" class="mface" src="art/mascot_${FACE[m.mood]}.webp" alt="">
+    <div class="bubble"><b>${t('mas_name')}</b><span id="mastxt">${t(m.key)}</span></div></div>`;
+}
+function updateMascot() {
+  const img = $('#masimg'), tx = $('#mastxt'); if (!img || !tx) return;
+  const m = curMood(), src = `art/mascot_${FACE[m.mood]}.webp`, txt = t(m.key);
+  if (!img.src.endsWith(src)) img.src = src;
+  if (tx.textContent !== txt) tx.textContent = txt;
+}
+
 /* ---------- views ---------- */
 function advCard(a, mode) {
   const inP = S.party.includes(a.id), r = RARITY[a.rar], c = G.enhanceCost(a);
@@ -71,6 +94,7 @@ function viewQuest() {
       <div class="tag">${foeBoss ? `<b>${t('boss')}</b>${bossName}` : ''} ${t('stage_of', { r: rname(foeReg), s: f.f % 10 + 1 })}</div>
       <div class="party">${party}</div><div class="foe ${big ? 'big' : ''}" id="foe">${enemy(foeReg.mon, foeReg.hue, foeBoss, Math.min(12, Math.floor(f.f / 10) + 1))}</div><div id="fx"></div></div>
     <div class="bar"><i id="prog"></i></div>
+    ${mascotHtml()}
     ${f.stalled ? `<div class="warn">⚠ ${t('stalled')} (${t('power')} ${fmt(P)} / ${fmt(G.enemyPower(S.stage) * .7)})</div>` : ''}
     <div class="kv"><span>${t('power')}</span><b>${fmt(P)}</b></div>
     <div class="kv"><span>${t('enemy')}</span><b>${fmt(G.enemyPower(f.f))}</b></div>
@@ -91,7 +115,7 @@ function viewGuild() {
 }
 function viewRecruit() {
   const now = Date.now(), free = G.poolFree(S, now), rc = G.REFRESH_COST(S);
-  return `<h3>${t('cand')}</h3>
+  return `${mascotHtml('happy', 'mas_recruit')}<h3>${t('cand')}</h3>
     ${S.pool.map((a, i) => `<div class="card">${portrait(a, 56)}<div class="info"><div class="nm">${a.name}</div>
       <div class="sub"><span class="rar-${RARITY[a.rar].id}">${t('r_' + RARITY[a.rar].id)}</span> · ${t('cls_' + a.cls)}</div>
       <div class="sub">${t('power')} ${fmt(G.advPower(a))} · ${t('wage')} ${G.wage(a).toFixed(2)}${t('per_s')}</div><div class="sub">${t('cls_info_' + a.cls)}</div></div>
@@ -104,7 +128,7 @@ function viewRecruit() {
 }
 function viewMore() {
   const can = G.canPrestige(S);
-  return `<h3>${t('prestige')}</h3>
+  return `<div class="hero"><img src="art/mascot_full.webp" alt=""><div><div class="nm">Guild of Ash</div><div class="sub">${t('mas_idle1')}</div></div></div><h3>${t('prestige')}</h3>
     <div class="card"><div class="info"><div class="sub">${can ? t('prestige_t', { n: G.prestigeGain(S) }) : t('prestige_na')}</div></div>
     <div class="acts"><button class="b ${can ? 'red' : 'off'}" data-act="prestige">${t('prestige')}</button></div></div>
     <h3>${t('lang')}</h3>
@@ -161,11 +185,11 @@ document.addEventListener('click', async (e) => {
     case 'enhall': G.enhanceParty(S); break;
     case 'party': { const r = G.toggleParty(S, id); if (!r.ok) toast(t(r.reason)); break; }
     case 'fire': { const a = S.roster.find(x => x.id === id); const g = Math.floor(a.spent * .6 + RARITY[a.rar].price * .25);
-      return confirmDlg(t('fire_q', { n: a.name, g: fmt(g), s: a.rar }), () => { const r = G.dismiss(S, id); toast(r.ok ? t('fired', { n: a.name, g: fmt(r.gold), s: r.souls }) : t(r.reason)); save(); }); }
-    case 'guild': G.upgradeGuild(S); break;
-    case 'hire': { const r = G.hire(S, +b.dataset.i); if (r.ok) toast(t('hired', { n: r.adv.name })); else toast(t(r.reason === 'cap' ? 'cap' : 'need_gold')); break; }
+      return confirmDlg(t('fire_q', { n: a.name, g: fmt(g), s: a.rar }), () => { const r = G.dismiss(S, id); toast(r.ok ? t('fired', { n: a.name, g: fmt(r.gold), s: r.souls }) : t(r.reason)); if (r.ok) say('mas_fire', 'shy'); save(); }); }
+    case 'guild': if (G.upgradeGuild(S).ok) say('mas_guild', 'cheer'); break;
+    case 'hire': { const r = G.hire(S, +b.dataset.i); if (r.ok) { toast(t('hired', { n: r.adv.name })); say('mas_hire', 'happy'); } else toast(t(r.reason === 'cap' ? 'cap' : 'need_gold')); break; }
     case 'refresh': { const r = G.buyRefresh(S, Date.now()); if (!r.ok) toast(t('need_gold')); break; }
-    case 'summon': { const r = G.summon(S); if (r.ok) toast(t('hired', { n: r.adv.name })); else toast(t(r.reason === 'cap' ? 'cap' : 'need_souls')); break; }
+    case 'summon': { const r = G.summon(S); if (r.ok) { toast(t('hired', { n: r.adv.name })); say('mas_summon', 'cheer'); } else toast(t(r.reason === 'cap' ? 'cap' : 'need_souls')); break; }
     case 'ad-boost': return watch('boost');
     case 'ad-refresh': return watch('refresh');
     case 'ad-souls': return watch('souls');
@@ -192,6 +216,8 @@ function tick() {
   const out = G.simulate(S, dt, now);
   if (out.clears && tab === 'quest') floatGold(out.gold / out.clears);
   if (out.events.includes('lord')) toast(t('lord_down'));
+  if (out.bosses) say('mas_boss', 'cheer');
+  if (tab === 'quest') updateMascot();
   const pg = $('#prog'); if (pg) pg.style.width = (S.progress * 100) + '%';
   if (S.stage !== st0 && tab === 'quest') render(); else { updateHud(); updateAfford(); }
 }
@@ -205,7 +231,7 @@ function start() {
   render(); save();
   if (off) {
     const body = t('offline_b', { h: dur(off.away), c: off.o.clears, g: fmt(off.o.gold), s: off.o.souls });
-    modal(`<h3>${t('offline_t')}</h3><p>${body}</p>`, [
+    modal(`<img class="mface big" src="art/mascot_face6.webp" alt=""><h3>${t('offline_t')}</h3><p>${t('mas_off')}</p><p>${body}</p>`, [
       { label: t('claim') },
       { label: t('offline_ad') + ' · ' + adLabel('offline'), cls: 'ad', fn: async () => { if (G.adLeft(S, 'offline', Date.now()) <= 0) return toast(t('ad_none')); if (await showRewarded('offline')) { G.adGrant(S, 'offline', Date.now(), off.o); save(); render(); } } },
     ]);
