@@ -119,8 +119,14 @@ function viewMore() {
 }
 
 const VIEWS = { quest: viewQuest, guild: viewGuild, recruit: viewRecruit, more: viewMore };
+const ICON = {
+  quest: '<path d="M14.5 3.5l6 6-9 9-3-3zM4 20l4-4M7 13l4 4"/>',
+  guild: '<path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M12 8v6M9 11h6"/>',
+  recruit: '<circle cx="10" cy="8" r="3.5"/><path d="M3.5 20c.8-4 3.2-6 6.5-6s5.700 2 6.500 6M18 7v6M15 10h6"/>',
+  more: '<circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/>',
+};
 function renderTabs() {
-  $('#tabs').innerHTML = Object.keys(VIEWS).map(k => `<button data-tab="${k}" class="${k === tab ? 'on' : ''}">${t('tab_' + k)}</button>`).join('');
+  $('#tabs').innerHTML = Object.keys(VIEWS).map(k => `<button data-tab="${k}" class="${k === tab ? 'on' : ''}"><svg viewBox="0 0 24 24">${ICON[k]}</svg>${t('tab_' + k)}</button>`).join('');
 }
 function render() {
   if (tab === 'recruit' && !S.pool.length) G.refreshPool(S);
@@ -199,7 +205,7 @@ function start() {
   render(); save();
   if (off) {
     const body = t('offline_b', { h: dur(off.away), c: off.o.clears, g: fmt(off.o.gold), s: off.o.souls });
-    modal(`<h3 style="color:var(--bone)">${t('offline_t')}</h3><p>${body}</p>`, [
+    modal(`<h3>${t('offline_t')}</h3><p>${body}</p>`, [
       { label: t('claim') },
       { label: t('offline_ad') + ' · ' + adLabel('offline'), cls: 'ad', fn: async () => { if (G.adLeft(S, 'offline', Date.now()) <= 0) return toast(t('ad_none')); if (await showRewarded('offline')) { G.adGrant(S, 'offline', Date.now(), off.o); save(); render(); } } },
     ]);

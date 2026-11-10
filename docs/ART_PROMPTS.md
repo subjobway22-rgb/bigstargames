@@ -4,12 +4,14 @@
 (없는 파일은 기존 벡터 그림이 대신 표시됩니다.) 영어 프롬프트 권장.
 
 ## 0. 공통 스타일 (모든 프롬프트 앞에 붙이기)
+UI가 **파스텔 라벤더 톤**(Cosmoa 시안 참고)으로 바뀌어, 아트도 "밝은 애니풍 + 다크 판타지 소재"(파스텔 고딕)로 맞춥니다.
 ```
-STYLE: hand-painted dark fantasy game art, gritty ink linework with visible brush texture, desaturated ash grey, dried-blood red, bone white and tarnished gold palette, dramatic low-key rim lighting, grim occult atmosphere, slightly stylized proportions like a Darkest Dungeon or Hades character illustration, consistent style across the set, no text, no watermark, no logo
+STYLE: polished 2D anime game illustration, clean confident lineart, soft cel shading with delicate gradients, pastel lavender, white and soft pink palette with deep violet and black accents, glowing star and sparkle motifs, bright airy lighting with gentle rim light, gothic dark-fantasy costume details (horns, chains, ribbons, thorns, skulls) rendered cute and stylish, consistent style across the set, no text, no watermark, no logo
 ```
-**공통 네거티브**: `anime, chibi, cute, glossy plastic skin, neon colors, 3d render, photorealistic, extra fingers, text, watermark, bright cheerful lighting`
+**공통 네거티브**: `photorealistic, 3d render, muddy dark colors, gore, extra fingers, deformed hands, text, watermark, signature, blurry, low quality`
 
-> 일관성 팁: 같은 모델·같은 STYLE 문구·같은 시드/레퍼런스 이미지(첫 결과물)를 계속 사용하세요. 한 장씩 뽑는 것이 시트보다 품질이 좋습니다.
+> 일관성 팁: 같은 모델·같은 STYLE 문구·첫 결과물을 레퍼런스로 계속 사용하세요. 한 장씩 뽑는 것이 시트보다 품질이 좋습니다.
+> 배경(`bg_*`)은 밝은 황혼/파스텔 하늘 톤, 적·보스는 약간 어두운 대비색을 허용하되 라벤더 팔레트와 어울리게.
 
 ---
 ## 1. 모험가 초상 — 15장 `hero_{직업}_{1|2|3}.png`
