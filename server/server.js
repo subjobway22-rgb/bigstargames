@@ -48,7 +48,7 @@ http.createServer((req, res) => {
   let p = path.normalize(decodeURIComponent(u.pathname)).replace(/^(\.\.[/\\])+/, '');
   if (p.endsWith('/') || p === '.') p = path.join(p, 'index.html');
   const fp = path.join(ROOT, p);
-  if (!fp.startsWith(ROOT) || fp.startsWith(DATA) || p.startsWith('server') || p.startsWith('docs') || p.startsWith('.git')) { res.writeHead(404).end(); return; }
+  if (!fp.startsWith(ROOT) || fp.startsWith(DATA) || /^(server|docs|\.git|\.claude|third_party|scripts|build|fx|node_modules)(\/|$)/.test(p)) { res.writeHead(404).end(); return; }
   fs.readFile(fp, (e, b) => {
     if (e) { res.writeHead(404).end('not found'); return; }
     res.writeHead(200, { 'content-type': MIME[path.extname(fp)] || 'application/octet-stream', 'cache-control': p === 'sw.js' ? 'no-cache' : 'public, max-age=3600' }).end(b);

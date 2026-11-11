@@ -10,7 +10,16 @@
     "build:www": "node scripts/build-www.js",
     "android:add": "npx cap add android",
     "android:sync": "npm run build:www && npx cap sync android",
-    "android:open": "npx cap open android"
+    "android:open": "npx cap open android",
+    "fx:fetch": "node scripts/fx/fetch.mjs",
+    "fx:verify": "node scripts/fx/verify.mjs",
+    "fx:list": "node scripts/fx/list.mjs",
+    "fx:preview": "node scripts/fx/preview.mjs",
+    "fx:export": "node scripts/fx/export.mjs",
+    "fx:new": "node scripts/fx/new.mjs",
+    "fx:check": "node scripts/fx/check.mjs",
+    "fx:menu": "node scripts/fx/menu.mjs",
+    "fx:presets": "node scripts/fx/export.mjs --preset"
   },
   "dependencies": {
     "@capacitor/android": "^6.1.0",

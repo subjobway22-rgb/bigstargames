@@ -1,0 +1,291 @@
+{
+ "schema": 1,
+ "sheets": {
+  "impacts/hit-spark": {
+   "image": "impacts/hit-spark.png",
+   "json": "impacts/hit-spark.json",
+   "frames": 16,
+   "fps": 30,
+   "frameSize": [
+    136,
+    80
+   ],
+   "columns": 4,
+   "pivot": [
+    44,
+    64
+   ],
+   "loop": false
+  },
+  "explosions/plasma-explosion": {
+   "image": "explosions/plasma-explosion.png",
+   "json": "explosions/plasma-explosion.json",
+   "frames": 52,
+   "fps": 30,
+   "frameSize": [
+    224,
+    200
+   ],
+   "columns": 7,
+   "pivot": [
+    112,
+    100
+   ],
+   "loop": false
+  },
+  "pickups/collect-burst": {
+   "image": "pickups/collect-burst.png",
+   "json": "pickups/collect-burst.json",
+   "frames": 42,
+   "fps": 30,
+   "frameSize": [
+    112,
+    108
+   ],
+   "columns": 7,
+   "pivot": [
+    56,
+    94
+   ],
+   "loop": false
+  },
+  "ui/level-up": {
+   "image": "ui/level-up.png",
+   "json": "ui/level-up.json",
+   "frames": 97,
+   "fps": 30,
+   "frameSize": [
+    176,
+    138
+   ],
+   "columns": 9,
+   "pivot": [
+    88,
+    114
+   ],
+   "loop": false,
+   "act": {
+    "windup": 0.3,
+    "recovery": 0,
+    "onBody": true,
+    "targets": [],
+    "hits": [
+     {
+      "t": 0.28,
+      "freeze": 0.05,
+      "shake": 0.14,
+      "amp": 2,
+      "push": 1.2
+     }
+    ],
+    "poses": [
+     {
+      "t": -0.3,
+      "how": "smooth",
+      "pose": {
+       "crouch": 3,
+       "fx": 11,
+       "fy": -21,
+       "bx": 9,
+       "by": -21,
+       "ffx": 7,
+       "fbx": -7
+      }
+     },
+     {
+      "t": 0.28,
+      "how": "smooth",
+      "pose": {
+       "turn": 0.9,
+       "crouch": 7,
+       "lean": 2,
+       "fx": -6,
+       "fy": -13,
+       "bx": 7,
+       "by": -13,
+       "ffx": -5,
+       "fbx": 6
+      }
+     },
+     {
+      "t": 0.3,
+      "how": "snap",
+      "pose": {
+       "turn": 1.1,
+       "y": -16,
+       "crouch": -1,
+       "fx": -6,
+       "fy": -45,
+       "bx": 7,
+       "by": -44,
+       "ffx": -2,
+       "ffy": -8,
+       "fbx": 5,
+       "fby": -3,
+       "toeB": true
+      }
+     },
+     {
+      "t": 0.46,
+      "how": "smooth",
+      "pose": {
+       "turn": 1.1,
+       "y": -19,
+       "crouch": -1,
+       "fx": -6,
+       "fy": -45,
+       "bx": 7,
+       "by": -44,
+       "ffx": -2,
+       "ffy": -8,
+       "fbx": 5,
+       "fby": -3,
+       "toeB": true
+      }
+     },
+     {
+      "t": 0.72,
+      "how": "in",
+      "pose": {
+       "turn": 1.1,
+       "y": 0,
+       "crouch": -1,
+       "fx": -6,
+       "fy": -45,
+       "bx": 7,
+       "by": -44,
+       "ffx": -2,
+       "ffy": -4,
+       "fbx": 5,
+       "fby": -4,
+       "toeB": true
+      }
+     },
+     {
+      "t": 0.74,
+      "how": "snap",
+      "pose": {
+       "turn": 0.9,
+       "crouch": 5,
+       "lean": 2,
+       "fx": -6,
+       "fy": -13,
+       "bx": 7,
+       "by": -13,
+       "ffx": -5,
+       "fbx": 6
+      }
+     },
+     {
+      "t": 0.95,
+      "how": "out",
+      "pose": {
+       "turn": 0.9,
+       "crouch": 0,
+       "fx": -6,
+       "fy": -45,
+       "bx": 9,
+       "by": -15,
+       "ffx": -3,
+       "fbx": 4
+      }
+     },
+     {
+      "t": 1.2,
+      "how": "smooth",
+      "pose": {
+       "turn": 0.9,
+       "crouch": 1,
+       "fx": -6,
+       "fy": -43,
+       "bx": 9,
+       "by": -15,
+       "ffx": -3,
+       "fbx": 4
+      }
+     },
+     {
+      "t": 1.45,
+      "how": "smooth",
+      "pose": {
+       "turn": 0.9,
+       "crouch": 0,
+       "fx": -6,
+       "fy": -45,
+       "bx": 9,
+       "by": -15,
+       "ffx": -3,
+       "fbx": 4
+      }
+     },
+     {
+      "t": 2.3,
+      "how": "smooth",
+      "pose": {
+       "turn": 0.9,
+       "crouch": 0,
+       "fx": -6,
+       "fy": -41,
+       "bx": 9,
+       "by": -15,
+       "ffx": -3,
+       "fbx": 4
+      }
+     },
+     {
+      "t": 2.8,
+      "how": "smooth",
+      "pose": {
+       "crouch": 3,
+       "fx": 11,
+       "fy": -21,
+       "bx": 9,
+       "by": -21,
+       "ffx": 7,
+       "fbx": -7
+      }
+     },
+     {
+      "t": 3.2,
+      "how": "smooth",
+      "pose": {
+       "crouch": 3,
+       "fx": 11,
+       "fy": -21,
+       "bx": 9,
+       "by": -21,
+       "ffx": 7,
+       "fbx": -7
+      }
+     }
+    ]
+   }
+  }
+ },
+ "presets": {
+  "hit": {
+   "sheet": "impacts/hit-spark",
+   "scale": 2,
+   "anchor": "foe"
+  },
+  "bossDown": {
+   "sheet": "explosions/plasma-explosion",
+   "scale": 1,
+   "anchor": "foe"
+  },
+  "enhance": {
+   "sheet": "pickups/collect-burst",
+   "scale": 2,
+   "anchor": "party"
+  },
+  "guildUp": {
+   "sheet": "ui/level-up",
+   "scale": 2,
+   "anchor": "scene"
+  }
+ },
+ "pixelfx": {
+  "version": "0.3.1",
+  "commit": "044e12a45dc9cc312cec50ee606dfc98afe5adc2"
+ }
+}

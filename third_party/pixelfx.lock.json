@@ -1,0 +1,27 @@
+{
+  "name": "pixelfx",
+  "repository": "https://github.com/patch-gg/pixelfx",
+  "version": "0.3.1",
+  "commit": "044e12a45dc9cc312cec50ee606dfc98afe5adc2",
+  "license": "MIT",
+  "include": [
+    "src",
+    "tools",
+    "docs/AUTHORING.md",
+    "docs/CATALOG.md",
+    "README.md",
+    "LICENSE",
+    "NOTICE.md",
+    "package.json"
+  ],
+  "upstreamSkill": "skills/pixelfx/SKILL.md",
+  "exclude": [
+    "tools/serve.mjs",
+    "tools/build-gallery.mjs"
+  ],
+  "excludeWhy": {
+    "gallery/": "Contains the Patch Pixel typeface (c) Patch, NOT MIT. We never copy or use it.",
+    "tools/serve.mjs, tools/build-gallery.mjs": "Gallery tooling that loads gallery/fonts/PatchPixel-Regular.woff2.",
+    "docs/readme/*.gif, .github/": "Not needed."
+  }
+}

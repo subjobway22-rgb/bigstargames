@@ -5,6 +5,7 @@ import { t, setLang, getLang } from './i18n.js';
 import { showRewarded } from './ads.js';
 import * as Sync from './sync.js';
 import { initAdMob } from './admob.js';
+import { playFx, initFx, setFxEnabled } from './fx.js';
 
 const KEY = 'guild-of-ash-save';
 const $ = (s) => document.querySelector(s);
@@ -44,6 +45,17 @@ async function watch(kind, placement) {
   G.adGrant(S, kind, Date.now()); save(); render();
 }
 const adLabel = (kind) => t('ad_left', { n: Math.max(0, G.adLeft(S, kind, Date.now())) });
+
+/* ---------- pixel effects (pixelfx sheets, see js/fx.js) ---------- */
+function anchorPos(kind) {
+  const rect = (s) => document.querySelector(s)?.getBoundingClientRect();
+  if (kind === 'foe') { const r = rect('#foe'); return r && { x: r.left + r.width / 2, y: r.top + r.height * 0.8 }; }
+  if (kind === 'party') { const r = rect('.scene .party'); return r && { x: r.left + r.width / 2, y: r.bottom - 4 }; }
+  return { x: innerWidth / 2, y: innerHeight * 0.55 };
+}
+const fxQueue = [];
+const queueFx = (name) => fxQueue.push(name);
+function flushFx() { while (fxQueue.length) playFx(fxQueue.shift(), anchorPos); }
 
 /* ---------- views ---------- */
 function advCard(a, mode) {
@@ -107,6 +119,8 @@ function viewMore() {
   return `<h3>${t('prestige')}</h3>
     <div class="card"><div class="info"><div class="sub">${can ? t('prestige_t', { n: G.prestigeGain(S) }) : t('prestige_na')}</div></div>
     <div class="acts"><button class="b ${can ? 'red' : 'off'}" data-act="prestige">${t('prestige')}</button></div></div>
+    <h3>${t('fx_title')}</h3>
+    <div class="kv"><span>${t('fx_on')}</span><input type="checkbox" id="fx" style="width:auto" ${S.set.fx === false ? '' : 'checked'}></div>
     <h3>${t('lang')}</h3>
     <select id="lang"><option value="auto">Auto</option><option value="ko">한국어</option><option value="en">English</option></select>
     <h3>${t('cloud')}</h3>
@@ -115,7 +129,7 @@ function viewMore() {
     <div class="note">${t('cloud_help')}</div>
     <div class="note">${t('cloud_id')}: ${S.cloud.id ? S.cloud.id + S.cloud.key : '-'}</div>
     <h3>·</h3><div class="note">${t('data_note')}</div>
-    <div class="row"><button class="b" data-act="reset">${t('reset')}</button></div>`;
+    <div class="row"><button class="b" data-act="licenses">${t('licenses')}</button><button class="b" data-act="reset">${t('reset')}</button></div>`;
 }
 
 const VIEWS = { quest: viewQuest, guild: viewGuild, recruit: viewRecruit, more: viewMore };
@@ -151,12 +165,12 @@ document.addEventListener('click', async (e) => {
   const b = e.target.closest('[data-act]'); if (!b) return;
   const id = +(b.closest('[data-id]')?.dataset.id || 0), act = b.dataset.act;
   switch (act) {
-    case 'enh': G.enhance(S, id, 1); break;
-    case 'enhall': G.enhanceParty(S); break;
+    case 'enh': if (G.enhance(S, id, 1).ok) queueFx('enhance'); break;
+    case 'enhall': if (G.enhanceParty(S) > 0) queueFx('enhance'); break;
     case 'party': { const r = G.toggleParty(S, id); if (!r.ok) toast(t(r.reason)); break; }
     case 'fire': { const a = S.roster.find(x => x.id === id); const g = Math.floor(a.spent * .6 + RARITY[a.rar].price * .25);
       return confirmDlg(t('fire_q', { n: a.name, g: fmt(g), s: a.rar }), () => { const r = G.dismiss(S, id); toast(r.ok ? t('fired', { n: a.name, g: fmt(r.gold), s: r.souls }) : t(r.reason)); save(); }); }
-    case 'guild': G.upgradeGuild(S); break;
+    case 'guild': if (G.upgradeGuild(S).ok) queueFx('guildUp'); break;
     case 'hire': { const r = G.hire(S, +b.dataset.i); if (r.ok) toast(t('hired', { n: r.adv.name })); else toast(t(r.reason === 'cap' ? 'cap' : 'need_gold')); break; }
     case 'refresh': { const r = G.buyRefresh(S, Date.now()); if (!r.ok) toast(t('need_gold')); break; }
     case 'summon': { const r = G.summon(S); if (r.ok) toast(t('hired', { n: r.adv.name })); else toast(t(r.reason === 'cap' ? 'cap' : 'need_souls')); break; }
@@ -170,13 +184,17 @@ document.addEventListener('click', async (e) => {
       const r = await Sync.download(S, raw.slice(0, 32), raw.slice(32));
       if (r.r === 'ok') { S = Object.assign(G.newState(), r.data, { cloud: { id: raw.slice(0, 32), key: raw.slice(32), rev: r.data.rev, at: Date.now() }, pool: [] }); save(); toast(t('cloud_ok')); }
       else toast(t(r.r === 'none' ? 'cloud_none' : 'cloud_err')); break; }
+    case 'licenses': { let txt = ''; try { txt = await (await fetch('THIRD_PARTY_NOTICES.md')).text(); } catch {}
+      const esc = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+      return modal(`<h3 style="color:var(--bone)">${t('licenses')}</h3><div class="lic">${esc(txt || 'THIRD_PARTY_NOTICES.md')}</div>`, [{ label: t('ok') }]); }
     case 'reset': return confirmDlg(t('reset_q'), () => { localStorage.removeItem(KEY); S = G.newState(); save(); });
   }
-  save(); render();
+  save(); render(); flushFx();
 });
 document.addEventListener('change', (e) => {
   if (e.target.id === 'lang') { S.set.lang = e.target.value; setLang(S.set.lang); save(); render(); }
   if (e.target.id === 'sync') { S.set.sync = e.target.checked; save(); }
+  if (e.target.id === 'fx') { S.set.fx = e.target.checked; setFxEnabled(S.set.fx); save(); }
 });
 
 /* ---------- loop ---------- */
@@ -184,13 +202,15 @@ function tick() {
   const now = Date.now(); const dt = Math.min(2, (now - lastFrame) / 1000); lastFrame = now;
   const before = S.stats.clears, g0 = S.gold, st0 = S.stage;
   const out = G.simulate(S, dt, now);
-  if (out.clears && tab === 'quest') floatGold(out.gold / out.clears);
+  if (out.clears && tab === 'quest') { floatGold(out.gold / out.clears); queueFx(out.bosses ? 'bossDown' : 'hit'); }
   if (out.events.includes('lord')) toast(t('lord_down'));
   const pg = $('#prog'); if (pg) pg.style.width = (S.progress * 100) + '%';
   if (S.stage !== st0 && tab === 'quest') render(); else { updateHud(); updateAfford(); }
+  flushFx();
 }
 function start() {
-  S = load() || G.newState(); setLang(S.set.lang);
+  S = load() || G.newState(); setLang(S.set.lang); setFxEnabled(S.set.fx !== false); initFx();
+  if (location.search.includes('debug')) window.__fx = { play: (n) => playFx(n, anchorPos) };
   const now = Date.now();
   const away = Math.min((now - S.t) / 1000, G.OFFLINE_CAP);
   lastFrame = now;

@@ -22,6 +22,7 @@ const D = {
     cls_warrior: '전사', cls_rogue: '도적', cls_mage: '마도사', cls_priest: '성직자', cls_heretic: '이단자',
     r_C: '일반', r_R: '희귀', r_E: '영웅', r_L: '전설',
     cls_info_warrior: '높은 전투력', cls_info_rogue: '골드 +10%', cls_info_mage: '매우 높은 전투력 · 급여↑', cls_info_priest: '급여↓ · 영혼 획득↑', cls_info_heretic: '영혼 획득↑↑',
+    fx_title: '시각 효과', fx_on: '픽셀 이펙트 (타격·강화·보스)', licenses: '오픈소스 라이선스',
     abyss: '끝없는 심연', stage_of: '{r} · {s}/10',
   },
   en: {
@@ -47,6 +48,7 @@ const D = {
     cls_warrior: 'Warrior', cls_rogue: 'Rogue', cls_mage: 'Mage', cls_priest: 'Priest', cls_heretic: 'Heretic',
     r_C: 'Common', r_R: 'Rare', r_E: 'Epic', r_L: 'Legend',
     cls_info_warrior: 'High power', cls_info_rogue: 'Gold +10%', cls_info_mage: 'Very high power · wages↑', cls_info_priest: 'Wages↓ · souls↑', cls_info_heretic: 'Souls↑↑',
+    fx_title: 'Visual effects', fx_on: 'Pixel effects (hits, upgrades, bosses)', licenses: 'Open-source licenses',
     abyss: 'Endless Abyss', stage_of: '{r} · {s}/10',
   },
 };

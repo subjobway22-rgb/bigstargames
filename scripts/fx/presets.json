@@ -1,0 +1,7 @@
+{
+  "_doc": "Game event -> pixelfx effect. `npm run fx:export -- --preset` renders every entry into art/fx/. anchor: foe | party | scene. scale is the integer CSS upscale (pixel art must stay on whole numbers). palette is a name from PAL in third_party/pixelfx/src/core/color.js.",
+  "hit":      { "id": "impacts/hit-spark",           "options": { "palette": "ember" }, "scale": 2, "anchor": "foe",   "note": "every stage clear" },
+  "bossDown": { "id": "explosions/plasma-explosion", "options": { "palette": "blood" }, "scale": 1, "anchor": "foe",   "note": "a boss falls" },
+  "enhance":  { "id": "pickups/collect-burst",        "options": { "palette": "gold"  }, "scale": 2, "anchor": "party", "note": "an adventurer is enhanced" },
+  "guildUp":  { "id": "ui/level-up",                 "options": { "palette": "gold"  }, "scale": 2, "anchor": "scene", "note": "the guild is expanded" }
+}

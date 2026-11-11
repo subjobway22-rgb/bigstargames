@@ -52,3 +52,8 @@ select,input{background:var(--pn2);color:var(--bone);border:1px solid #3a2f40;bo
 .ew{position:relative;width:100%;line-height:0}.ew img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .scene .bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .scene .party,.scene .foe{z-index:2}
+
+/* pixelfx layer (js/fx.js): above the scene, never blocks taps */
+#fxlayer{position:fixed;inset:0;pointer-events:none;z-index:15;overflow:hidden}
+#fxlayer canvas{position:absolute;image-rendering:pixelated;image-rendering:crisp-edges}
+.lic{max-height:55vh;overflow:auto;text-align:left;white-space:pre-wrap;font-size:11px;line-height:1.45;color:var(--dim);margin-top:8px;user-select:text}
