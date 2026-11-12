@@ -1,0 +1,41 @@
+{
+ "schema": 1,
+ "sheets": {
+  "hero_rogue": {
+   "image": "hero_rogue.webp",
+   "frameSize": [
+    225,
+    228
+   ],
+   "columns": 4,
+   "frames": 8,
+   "pivot": [
+    86.5,
+    224.0
+   ],
+   "facing": "right",
+   "anims": {
+    "move": {
+     "frames": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "fps": 8,
+     "loop": true
+    },
+    "attack": {
+     "frames": [
+      4,
+      5,
+      6,
+      7
+     ],
+     "fps": 12,
+     "loop": false
+    }
+   }
+  }
+ }
+}

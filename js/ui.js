@@ -6,6 +6,7 @@ import { showRewarded } from './ads.js';
 import * as Sync from './sync.js';
 import { initAdMob } from './admob.js';
 import { playFx, initFx, setFxEnabled } from './fx.js';
+import { initSprites, spriteHtml, spriteAttack } from './sprites.js';
 
 const KEY = 'guild-of-ash-save';
 const $ = (s) => document.querySelector(s);
@@ -55,7 +56,10 @@ function anchorPos(kind) {
 }
 const fxQueue = [];
 const queueFx = (name) => fxQueue.push(name);
-function flushFx() { while (fxQueue.length) playFx(fxQueue.shift(), anchorPos); }
+function flushFx() {
+  if (fxQueue.some((n) => n === 'hit' || n === 'bossDown')) spriteAttack();   // the party swings when something dies
+  while (fxQueue.length) playFx(fxQueue.shift(), anchorPos);
+}
 
 /* ---------- views ---------- */
 function advCard(a, mode) {
@@ -76,7 +80,7 @@ function advCard(a, mode) {
 function viewQuest() {
   const f = G.fight(S), reg = region(S.stage), boss = G.isBoss(S.stage);
   const P = f.P, foeReg = region(f.f), foeBoss = G.isBoss(f.f);
-  const party = G.partyList(S).map(a => portrait(a, 38)).join('');
+  const party = G.partyList(S).map(a => spriteHtml('hero_' + a.cls, 86, 'right') || portrait(a, 38)).join('');
   const bossName = foeBoss ? rname(foeReg.boss) : '';
   const big = foeReg.mon === 'lord' || foeBoss;
   return `<div class="scene">${scene(Math.floor(f.f / 10))}
@@ -210,13 +214,14 @@ function tick() {
 }
 function start() {
   S = load() || G.newState(); setLang(S.set.lang); setFxEnabled(S.set.fx !== false); initFx();
-  if (location.search.includes('debug')) window.__fx = { play: (n) => playFx(n, anchorPos) };
+  if (location.search.includes('debug')) window.__fx = { play: (n) => playFx(n, anchorPos), attack: () => spriteAttack() };
   const now = Date.now();
   const away = Math.min((now - S.t) / 1000, G.OFFLINE_CAP);
   lastFrame = now;
   let off = null;
   if (away > 60) { const o = G.simulate(S, away, now); if (o.gold > 0 || o.souls > 0) off = { o, away }; }
   render(); save();
+  initSprites().then((ok) => { if (ok && tab === 'quest') render(); });
   if (off) {
     const body = t('offline_b', { h: dur(off.away), c: off.o.clears, g: fmt(off.o.gold), s: off.o.souls });
     modal(`<h3 style="color:var(--bone)">${t('offline_t')}</h3><p>${body}</p>`, [

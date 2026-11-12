@@ -57,3 +57,7 @@ select,input{background:var(--pn2);color:var(--bone);border:1px solid #3a2f40;bo
 #fxlayer{position:fixed;inset:0;pointer-events:none;z-index:15;overflow:hidden}
 #fxlayer canvas{position:absolute;image-rendering:pixelated;image-rendering:crisp-edges}
 .lic{max-height:55vh;overflow:auto;text-align:left;white-space:pre-wrap;font-size:11px;line-height:1.45;color:var(--dim);margin-top:8px;user-select:text}
+
+/* animated sprites (js/sprites.js) */
+.scene .party{align-items:flex-end}
+.scene .party .spr{display:block;margin-right:-22px;filter:drop-shadow(0 0 1px rgba(216,207,184,.55)) drop-shadow(0 3px 3px #000)}
