@@ -1,0 +1,460 @@
+{
+ "style": "dark fantasy occult 2D game asset, hand-painted look with bold clean dark outlines and visible brush texture, slightly stylized proportions (Darkest Dungeon and Hades inspired), limited desaturated palette of ash grey #2b2830, dried-blood red #8c1d2b, bone white #d8cfb8, tarnished gold #b8923a, ember orange #c4572b, ghostfire green #6f8f5a and void violet #463368, single soft key light from the upper left with a darker lower-right edge, consistent line weight and rendering across the whole set",
+ "transparent": "isolated single subject, centered with about 10% empty margin, fully transparent background (PNG with alpha channel), no ground shadow, no backdrop, no frame, no text, no letters, no watermark, no signature, clean edges, nothing cropped",
+ "opaque": "fully opaque full-frame image, no transparency, no text, no letters, no watermark, no signature",
+ "avoid": "Avoid: photorealistic, 3d render, anime, chibi, cute, glossy plastic, neon colors, bright cheerful lighting, blurry, low quality, extra fingers, deformed hands",
+ "groups": [
+  {
+   "id": "hero",
+   "title": "모험가 초상 15장",
+   "spec": "4:5 세로 1024x1280 · 투명 PNG · 가슴 위 흉상 (카드 배경·등급 테두리는 게임이 그림)",
+   "lead": "bust portrait, head and shoulders, front to three-quarter view, face in the upper 60% of the frame,",
+   "suffix": "T",
+   "wired": true,
+   "note": null,
+   "items": [
+    {
+     "file": "art/hero_warrior_1.png",
+     "desc": "grizzled scarred veteran knight, dented iron helm with two broken bone horns, blood-stained tabard, glowing red eyes in the helmet slit"
+    },
+    {
+     "file": "art/hero_warrior_2.png",
+     "desc": "female berserker, half-shaved head, red war paint, spiked pauldrons, chain wrapped around the neck, grim stare, ember-orange eyes"
+    },
+    {
+     "file": "art/hero_warrior_3.png",
+     "desc": "massive masked executioner in rusted plate and a black leather hood, sword hilt behind the shoulder, cold pale eyes"
+    },
+    {
+     "file": "art/hero_rogue_1.png",
+     "desc": "hooded female assassin with a black cloth mask, cold teal glowing eyes, twin daggers crossed at her shoulders"
+    },
+    {
+     "file": "art/hero_rogue_2.png",
+     "desc": "gaunt male thief in a crow-feather cowl, stitched lips, amber eyes, lockpicks on a bandolier"
+    },
+    {
+     "file": "art/hero_rogue_3.png",
+     "desc": "young plague-scout, beaked leather mask pushed up on the forehead, soot on cheeks, green eyes, tattered cloak"
+    },
+    {
+     "file": "art/hero_mage_1.png",
+     "desc": "gaunt old mage, tattered violet robes, crooked witch hat with antler-like horns, glowing violet eyes, floating arcane runes"
+    },
+    {
+     "file": "art/hero_mage_2.png",
+     "desc": "pale sorceress with a veil of chains and a crown of black thorns, blood-red eyes, crimson sigils orbiting her"
+    },
+    {
+     "file": "art/hero_mage_3.png",
+     "desc": "hollow-cheeked warlock with a third eye on the forehead, ash-grey robes, ink-black hands, blue ghostfire between the fingers"
+    },
+    {
+     "file": "art/hero_priest_1.png",
+     "desc": "blindfolded priest, cracked golden halo, crimson stitched cross over the blindfold, black tears, tattered white and grey vestments, censer chain"
+    },
+    {
+     "file": "art/hero_priest_2.png",
+     "desc": "young nun with eyes sewn shut, thorn rosary, burnt veil, faint holy glow cracking like porcelain"
+    },
+    {
+     "file": "art/hero_priest_3.png",
+     "desc": "bald inquisitor with a branded forehead, iron mask covering half the jaw, heavy chained book at the belt, bloodshot gold eyes"
+    },
+    {
+     "file": "art/hero_heretic_1.png",
+     "desc": "necromancer in a bone skull mask with branching deer antlers, green ghostfire in the eye sockets, ritual sigils painted on dark robes"
+    },
+    {
+     "file": "art/hero_heretic_2.png",
+     "desc": "cultist witch with a goat-skull headdress, black ritual paint dripping from her eyes, moth wings tattooed on the neck, violet glow"
+    },
+    {
+     "file": "art/hero_heretic_3.png",
+     "desc": "hunched ghoulish occultist, face wrapped in burial linen with a single glowing red eye, tooth necklace, dripping candle wax"
+    }
+   ]
+  },
+  {
+   "id": "foe",
+   "title": "일반 적 6장",
+   "spec": "1:1 1024x1024 · 투명 PNG · 전신",
+   "lead": "full body game enemy sprite, three-quarter view facing left, feet visible,",
+   "suffix": "T",
+   "wired": true,
+   "note": null,
+   "items": [
+    {
+     "file": "art/foe_imp.png",
+     "desc": "small hunched horned imp with bat wings, sooty red skin, needle teeth, glowing yellow eyes, clutching a rusted dagger"
+    },
+    {
+     "file": "art/foe_skel.png",
+     "desc": "skeleton soldier in rotted chainmail with a notched sword and splintered shield, green ghostfire in the eye sockets"
+    },
+    {
+     "file": "art/foe_wraith.png",
+     "desc": "tattered hooded wraith floating, hollow black face with two pale blue eyes, ragged robe dissolving into smoke, skeletal hands"
+    },
+    {
+     "file": "art/foe_beast.png",
+     "desc": "emaciated hellhound, exposed ribs, cracked bone armor plates, dripping jaws, three glowing red eyes"
+    },
+    {
+     "file": "art/foe_knight.png",
+     "desc": "towering fallen knight in blackened horned plate armor, glowing red visor slit, huge notched greatsword dragging on the ground"
+    },
+    {
+     "file": "art/foe_lord.png",
+     "desc": "demonic general with curved ram horns, scarred obsidian skin, tattered war cape, molten cracks glowing orange"
+    }
+   ]
+  },
+  {
+   "id": "boss",
+   "title": "지역 보스 12장",
+   "spec": "1:1 1024x1024 · 투명 PNG · 전신 · 일반 적보다 크고 위압적 (오라도 투명 배경 위에)",
+   "lead": "full body boss, imposing, large scale, three-quarter view facing left,",
+   "suffix": "T",
+   "wired": true,
+   "note": null,
+   "items": [
+    {
+     "file": "art/boss_01.png",
+     "desc": "Grak the Hollow: obese starving ogre with a hollow belly full of candles and skulls, chains and a butcher cleaver"
+    },
+    {
+     "file": "art/boss_02.png",
+     "desc": "Morwen of Crows: witch whose cloak is made of hundreds of crows, antlered skull crown, glowing white eyes"
+    },
+    {
+     "file": "art/boss_03.png",
+     "desc": "Osk, Fen King: giant bog corpse king crowned with rusted iron, ribcage throne roots, swamp moss and leeches"
+    },
+    {
+     "file": "art/boss_04.png",
+     "desc": "Veil the Sealed: gigantic priest bound in iron chains and wax seals, mouth sewn shut, bleeding stained-glass halo"
+    },
+    {
+     "file": "art/boss_05.png",
+     "desc": "Drog Ashbound: colossal knight whose armor is welded from melted swords, ash falling from the joints, ember eyes"
+    },
+    {
+     "file": "art/boss_06.png",
+     "desc": "Gorge Butcher: four-armed flayed brute holding hooks and cleavers, apron of stitched skin, blood-soaked"
+    },
+    {
+     "file": "art/boss_07.png",
+     "desc": "General Kael Undying: skeletal commander in a tattered crimson cloak and cracked golden armor, spectral banner"
+    },
+    {
+     "file": "art/boss_08.png",
+     "desc": "Serpha Sandeye: serpentine sand queen with a coiled lower body, many glass-shard eyes, a veil of fine chains"
+    },
+    {
+     "file": "art/boss_09.png",
+     "desc": "Ysel the Rimelich: frost-encrusted lich with an icicle crown, hollow chest holding a frozen heart, pale cyan glow"
+    },
+    {
+     "file": "art/boss_10.png",
+     "desc": "Barzak Gatekeeper: three-headed hellhound-demon inside a molten iron gate frame, burning chains, lava drool"
+    },
+    {
+     "file": "art/boss_11.png",
+     "desc": "Azath, Eye of the Deep: floating mass of black tentacles around one enormous bloodshot eye, runic rings"
+    },
+    {
+     "file": "art/boss_12.png",
+     "desc": "Malkhar, Demon Lord: towering demon king, immense curved horns, obsidian crown, four glowing eyes, tattered black wings, molten sigils across the chest, final-boss presence"
+    }
+   ]
+  },
+  {
+   "id": "bg",
+   "title": "지역 배경 12장 (유일하게 불투명 JPG)",
+   "spec": "2:1 가로 1536x768 · 불투명 JPG · 아래 1/3은 비움(캐릭터가 서는 지면) · 인물·글자 없음 · 어둡게",
+   "lead": "wide environment background, empty foreground ground in the lower third, no characters,",
+   "suffix": "O",
+   "wired": true,
+   "note": null,
+   "items": [
+    {
+     "file": "art/bg_01.jpg",
+     "desc": "burnt ruined village at dusk, collapsed cottages, blood-red sky, crooked fence"
+    },
+    {
+     "file": "art/bg_02.jpg",
+     "desc": "dead black forest, crows on bare branches, pale moon through fog"
+    },
+    {
+     "file": "art/bg_03.jpg",
+     "desc": "misty bog with half-sunken bones and will-o-wisps, green haze"
+    },
+    {
+     "file": "art/bg_04.jpg",
+     "desc": "ruined abbey interior, shattered stained glass, candlelight, dust"
+    },
+    {
+     "file": "art/bg_05.jpg",
+     "desc": "endless grey ash wasteland, dead trees, ember-lit horizon"
+    },
+    {
+     "file": "art/bg_06.jpg",
+     "desc": "deep red canyon with jagged cliffs, hanging chains, blood-colored river"
+    },
+    {
+     "file": "art/bg_07.jpg",
+     "desc": "dark fortress courtyard with broken battlements and spectral torches"
+    },
+    {
+     "file": "art/bg_08.jpg",
+     "desc": "desert of glass shards under an eclipse, violet sky"
+    },
+    {
+     "file": "art/bg_09.jpg",
+     "desc": "frozen necropolis with ice-covered crypts and cyan fog"
+    },
+    {
+     "file": "art/bg_10.jpg",
+     "desc": "hellgate pass with a huge molten gate, lava cracks, black smoke"
+    },
+    {
+     "file": "art/bg_11.jpg",
+     "desc": "abyssal hall of black columns and floating eyes, void-purple light"
+    },
+    {
+     "file": "art/bg_12.jpg",
+     "desc": "demon lord's throne keep, vast obsidian hall, red braziers, towering throne silhouette"
+    }
+   ]
+  },
+  {
+   "id": "cur",
+   "title": "재화 아이콘 3장",
+   "spec": "256x256 · 투명 PNG",
+   "lead": "game UI icon, flat front view, thick dark outline, readable at 48px,",
+   "suffix": "T",
+   "wired": false,
+   "note": null,
+   "items": [
+    {
+     "file": "art/ui/ico_gold.png",
+     "desc": "a single heavy tarnished-gold coin with an embossed horned skull and a cracked rim"
+    },
+    {
+     "file": "art/ui/ico_soul.png",
+     "desc": "a floating soul wisp: a pale violet-white flame shaped like a teardrop with a tiny screaming face inside"
+    },
+    {
+     "file": "art/ui/ico_essence.png",
+     "desc": "a blood-red diamond crystal wrapped in a thin black thorn ring, a rune glowing inside"
+    }
+   ]
+  },
+  {
+   "id": "tab",
+   "title": "하단 탭 아이콘 4장",
+   "spec": "128x128 · 투명 PNG · 밝은 뼈색 한 톤 + 어두운 외곽선 (활성/비활성은 게임이 밝기로 처리)",
+   "lead": "game UI icon, flat front view, thick dark outline, readable at 48px,",
+   "suffix": "T",
+   "wired": false,
+   "note": null,
+   "items": [
+    {
+     "file": "art/ui/tab_quest.png",
+     "desc": "two crossed swords over a small skull, single-tone bone white #d8cfb8 with a dark outline"
+    },
+    {
+     "file": "art/ui/tab_guild.png",
+     "desc": "a heater shield with a horned emblem, single-tone bone white #d8cfb8 with a dark outline"
+    },
+    {
+     "file": "art/ui/tab_recruit.png",
+     "desc": "a hooded silhouette holding a rolled contract scroll with a wax seal, single-tone bone white #d8cfb8 with a dark outline"
+    },
+    {
+     "file": "art/ui/tab_more.png",
+     "desc": "three glowing runic dots in a row inside a thin circle, single-tone bone white #d8cfb8 with a dark outline"
+    }
+   ]
+  },
+  {
+   "id": "cls",
+   "title": "직업 엠블럼 5장",
+   "spec": "256x256 · 투명 PNG · 5장 모두 같은 메달 틀",
+   "lead": "game UI class emblem, circular medal with the same black iron rim and bone-white edge on every emblem, flat front view, readable at 48px,",
+   "suffix": "T",
+   "wired": false,
+   "note": null,
+   "items": [
+    {
+     "file": "art/ui/class_warrior.png",
+     "desc": "a broken horned helmet in the center of the medal"
+    },
+    {
+     "file": "art/ui/class_rogue.png",
+     "desc": "a crossed pair of daggers and a crow feather in the center of the medal"
+    },
+    {
+     "file": "art/ui/class_mage.png",
+     "desc": "a witch hat and a violet star in the center of the medal"
+    },
+    {
+     "file": "art/ui/class_priest.png",
+     "desc": "a cracked halo over a blindfold in the center of the medal"
+    },
+    {
+     "file": "art/ui/class_heretic.png",
+     "desc": "an antlered skull and a green flame in the center of the medal"
+    }
+   ]
+  },
+  {
+   "id": "frm",
+   "title": "등급 프레임 4장",
+   "spec": "512x640 (4:5) · 투명 PNG · 가운데가 완전히 뚫린 테두리 · 4장 같은 구도·두께",
+   "lead": "game UI portrait card frame, 4:5 vertical ornate border only, the entire inside of the frame is empty and fully transparent, border thickness about 8% of the width, same layout and thickness as the rest of the set,",
+   "suffix": "F",
+   "wired": false,
+   "note": null,
+   "items": [
+    {
+     "file": "art/ui/frame_C.png",
+     "desc": "plain worn iron frame, scratched, ash grey"
+    },
+    {
+     "file": "art/ui/frame_R.png",
+     "desc": "steel frame with small blue-grey gems in the corners, thin silver inlay"
+    },
+    {
+     "file": "art/ui/frame_E.png",
+     "desc": "dark violet metal frame with thorny vines and glowing purple runes on the corners"
+    },
+    {
+     "file": "art/ui/frame_L.png",
+     "desc": "ornate tarnished-gold frame with horns on the top corners, a small third-eye gem at the top center, faint ember glow"
+    }
+   ]
+  },
+  {
+   "id": "btn",
+   "title": "버튼·패널·바 (9-slice 틀)",
+   "spec": "각 크기는 표 참고 · 투명 PNG · 글자 없음 · 모서리만 장식, 가운데·변은 단순하게",
+   "lead": "game UI element, 9-slice friendly: ornate corners only with a plain stretchable center and plain straight edges, flat front view, no text,",
+   "suffix": "F",
+   "wired": false,
+   "note": null,
+   "items": [
+    {
+     "file": "art/ui/btn_primary.png",
+     "desc": "pill-shaped button 384x128, dried-blood red enamel with a dark iron rim and tiny rivets"
+    },
+    {
+     "file": "art/ui/btn_secondary.png",
+     "desc": "pill-shaped button 384x128, ash-grey stone with a dark iron rim and tiny rivets"
+    },
+    {
+     "file": "art/ui/btn_ad.png",
+     "desc": "pill-shaped button 384x128, tarnished gold with a dark rim and a faint ember glow"
+    },
+    {
+     "file": "art/ui/panel_card.png",
+     "desc": "card panel 512x256, dark iron-bound parchment, worn edges, subtle corner studs"
+    },
+    {
+     "file": "art/ui/panel_modal.png",
+     "desc": "large pop-up panel 512x512, ornate dark iron border with bone-white corner skulls, plain center"
+    },
+    {
+     "file": "art/ui/bar_frame.png",
+     "desc": "long thin progress-bar frame 1024x64, dark iron with studs, empty transparent interior"
+    },
+    {
+     "file": "art/ui/bar_fill.png",
+     "desc": "progress bar fill 256x32, blood-red to ember gradient with a glossy top edge, seamless horizontally"
+    },
+    {
+     "file": "art/ui/banner_boss.png",
+     "desc": "torn black war banner ribbon 1024x256 with a skull crown in the center, empty cloth area, no text"
+    }
+   ]
+  },
+  {
+   "id": "itm",
+   "title": "광고 보상 · 아이템 9장",
+   "spec": "256x256 · 투명 PNG",
+   "lead": "game item icon, flat front view, thick dark outline, readable at 64px,",
+   "suffix": "T",
+   "wired": false,
+   "note": null,
+   "items": [
+    {
+     "file": "art/ui/item_boost.png",
+     "desc": "(골드 2배 광고) an hourglass with golden sand and a glowing double-strike rune (a rune, no letters or digits), cracked bone frame"
+    },
+    {
+     "file": "art/ui/item_scroll.png",
+     "desc": "(새 지원자 명단) a rolled parchment contract with a blood-red wax seal and a quill"
+    },
+    {
+     "file": "art/ui/item_souls.png",
+     "desc": "(영혼 +5) a small leather pouch spilling glowing violet soul wisps"
+    },
+    {
+     "file": "art/ui/item_chest.png",
+     "desc": "(오프라인 보상) a closed iron-bound treasure chest with a skull lock, faint gold light leaking through the seam"
+    },
+    {
+     "file": "art/ui/item_chest_open.png",
+     "desc": "(보상 수령) the same chest opened, gold coins and a violet gem spilling out, golden light rays"
+    },
+    {
+     "file": "art/ui/item_summon.png",
+     "desc": "(영혼 소환) a floating violet soul crystal in a ritual circle of runes, glowing"
+    },
+    {
+     "file": "art/ui/item_gold_s.png",
+     "desc": "(골드 소) a tiny pile of five tarnished gold coins"
+    },
+    {
+     "file": "art/ui/item_gold_m.png",
+     "desc": "(골드 중) a medium pile of gold coins and a goblet"
+    },
+    {
+     "file": "art/ui/item_gold_l.png",
+     "desc": "(골드 대) a heap of gold coins, jewels and a crown"
+    }
+   ]
+  },
+  {
+   "id": "store",
+   "title": "앱 아이콘 · 스토어",
+   "spec": "파일별 규격 참고 (아이콘은 불투명, 전경은 투명)",
+   "lead": "",
+   "suffix": "X",
+   "wired": false,
+   "note": null,
+   "items": [
+    {
+     "file": "store/icon-1024.png",
+     "desc": "STYLE app icon with a bold silhouette readable at 48px: a horned skull-masked guild emblem inside a blood-red ritual circle with a gold dashed inner ring, dark background fully opaque, centered, no text",
+     "extra": "O",
+     "size": "1024x1024 · 불투명"
+    },
+    {
+     "file": "store/icon-foreground.png",
+     "desc": "the same horned skull-masked guild emblem and ritual circle only, with no background, kept entirely inside the central 66% of the canvas (Android adaptive icon safe zone), no text",
+     "extra": "T",
+     "size": "1024x1024 · 투명"
+    },
+    {
+     "file": "store/feature-1024x500.png",
+     "desc": "cinematic wide key art of a party of five dark-fantasy adventurers marching toward a distant demon lord castle under a blood moon, empty area on the left for a logo, no text",
+     "extra": "O",
+     "size": "1024x500 · 불투명"
+    }
+   ]
+  }
+ ],
+ "transparentFrame": "isolated single UI element, centered, fully transparent background (PNG with alpha channel), no ground shadow, no scene backdrop, no text, no letters, no watermark, no signature, clean edges, nothing cropped"
+}
