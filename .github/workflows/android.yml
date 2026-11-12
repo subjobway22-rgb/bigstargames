@@ -1,0 +1,116 @@
+name: Android release build
+
+# Builds the Google Play AAB, the installable APK and the ZIPs.
+#   - every push to main / claude/** and every PR: debug APK + ZIPs (+ unsigned AAB)
+#   - when the keystore secrets exist (see docs/RELEASE.md): SIGNED release APK + SIGNED AAB (the file Google Play accepts)
+#   - pushing a tag like v0.1.0: also creates a DRAFT GitHub Release with everything attached (review, then publish)
+#   - Actions tab > "Run workflow" builds on demand
+on:
+  push:
+    branches: [main, 'claude/**']
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    permissions:
+      contents: write        # only used to create the draft release on tags
+    env:
+      HAS_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Licence + integrity guard (pixelfx pin, MIT notices, no Patch Pixel font)
+        run: npm run fx:verify
+
+      - name: Game logic sanity (balance simulation runs)
+        run: npm run sim | tail -3
+
+      - name: Android SDK (platform 36 + build-tools)
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;36.0.0"
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('android/**/*.gradle', 'android/gradle/wrapper/gradle-wrapper.properties', 'package-lock.json') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: Version
+        id: ver
+        run: |
+          NAME=$(node -p "require('./package.json').version")
+          # Play needs an ever-increasing integer. Run number + optional offset (repo variable VERSION_CODE_OFFSET).
+          CODE=$(( GITHUB_RUN_NUMBER + ${VERSION_CODE_OFFSET:-0} ))
+          echo "VERSION_NAME=$NAME" >> "$GITHUB_ENV"
+          echo "VERSION_CODE=$CODE" >> "$GITHUB_ENV"
+          echo "name=$NAME code=$CODE"
+        env:
+          VERSION_CODE_OFFSET: ${{ vars.VERSION_CODE_OFFSET }}
+
+      - name: Tag must match package.json version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          [ "$GITHUB_REF_NAME" = "v$VERSION_NAME" ] || { echo "tag $GITHUB_REF_NAME does not match package.json version $VERSION_NAME"; exit 1; }
+
+      - name: Restore upload keystore (only when the secrets are set)
+        if: env.HAS_KEYSTORE == 'true'
+        run: |
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/upload.jks"
+          echo "ANDROID_KEYSTORE_FILE=$RUNNER_TEMP/upload.jks" >> "$GITHUB_ENV"
+          echo "ANDROID_KEYSTORE_PASSWORD=$KS_PASS" >> "$GITHUB_ENV"
+          echo "ANDROID_KEY_ALIAS=$KEY_ALIAS" >> "$GITHUB_ENV"
+          echo "ANDROID_KEY_PASSWORD=$KEY_PASS" >> "$GITHUB_ENV"
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KS_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASS: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      - name: Build APK, AAB and ZIPs
+        run: node scripts/package.mjs --android
+
+      - name: Show what was built
+        run: |
+          ls -la dist
+          cat dist/SHA256SUMS.txt
+          if [ "$HAS_KEYSTORE" != "true" ]; then echo "::warning::No keystore secrets: the AAB is UNSIGNED and cannot be uploaded to Google Play. See docs/RELEASE.md"; fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: guild-of-ash-${{ env.VERSION_NAME }}-build${{ github.run_number }}
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Draft GitHub Release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: gh release create "$GITHUB_REF_NAME" dist/* --draft --title "Guild of Ash $GITHUB_REF_NAME" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}

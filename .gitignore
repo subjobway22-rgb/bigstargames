@@ -1,5 +1,14 @@
-android/
-build/
 node_modules/
 server/data/
+# build outputs
 www/
+build/
+dist/
+# signing secrets must never be committed (CI gets them from GitHub Secrets)
+*.keystore
+*.jks
+*.p12
+keystore.properties
+local.properties
+.env
+.env.*

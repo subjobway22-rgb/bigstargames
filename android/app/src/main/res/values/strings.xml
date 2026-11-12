@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Guild of Ash</string>
+    <string name="title_activity_main">Guild of Ash</string>
+    <string name="package_name">com.bigstargames.guildofash</string>
+    <string name="custom_url_scheme">com.bigstargames.guildofash</string>
+</resources>
