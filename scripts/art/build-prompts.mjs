@@ -22,6 +22,7 @@ out.push(`# 아트 제작 프롬프트 (Guild of Ash)
 | 🔧 | 파일이 오면 코드에 연결해야 함 (경로·이름은 고정) |
 
 ## 먼저 읽기
+- **지금은 \`docs/ART_PROMPTS_BATCH1.md\`(UI · 캐릭터 3종 · 몬스터 3종, 이동+공격 시트)부터 만드세요.** 이 문서는 전체 목록(나머지)입니다.
 - **투명 PNG가 필요한 항목**은 프롬프트에 \`fully transparent background (PNG with alpha channel)\`가 들어 있습니다. 모델에 **투명 배경 옵션**(예: 이미지 API의 \`background: transparent\`)이 있으면 켜세요.
   없으면 프롬프트의 \`fully transparent background (PNG with alpha channel)\`를 \`on a flat solid pure magenta #FF00FF background, no gradient\`로 바꿔 뽑은 뒤 **배경 제거 도구**(rembg, remove.bg, Photoshop)로 지웁니다. (녹색은 팔레트의 ghostfire와 섞여서 비추천)
 - **배경(bg_*)과 스토어 아이콘·피처 그래픽은 불투명**입니다. 그 프롬프트는 이미 불투명 조건으로 들어 있습니다.
