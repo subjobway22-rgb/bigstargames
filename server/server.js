@@ -13,12 +13,13 @@ const DATA = process.env.DATA_DIR || path.join(ROOT, 'server', 'data');
 const PORT = +process.env.PORT || 8080;
 const MAX = 16 * 1024;
 fs.mkdirSync(DATA, { recursive: true });
-const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.svg': 'image/svg+xml', '.png': 'image/png' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.md': 'text/plain; charset=utf-8' };
 const hash = (k) => crypto.createHash('sha256').update(k).digest('hex');
 const okId = (s) => /^[0-9a-f]{32}$/.test(s || '');
 
 http.createServer((req, res) => {
-  const u = new URL(req.url, 'http://x');
+  let u;
+  try { u = new URL('http://x' + (req.url.startsWith('/') ? '' : '/') + req.url); } catch { res.writeHead(400).end(); return; }
   const m = u.pathname.match(/^\/api\/save\/([0-9a-f]{32})$/);
   if (u.pathname.startsWith('/api/')) {
     if (!m) { res.writeHead(404).end(); return; }
@@ -45,12 +46,16 @@ http.createServer((req, res) => {
     }
     res.writeHead(405).end(); return;
   }
-  let p = path.normalize(decodeURIComponent(u.pathname)).replace(/^(\.\.[/\\])+/, '');
-  if (p.endsWith('/') || p === '.') p = path.join(p, 'index.html');
+  let dec; try { dec = decodeURIComponent(u.pathname); } catch { res.writeHead(400).end(); return; }
+  if (dec.includes('\0')) { res.writeHead(400).end(); return; }
+  let p = path.normalize(dec).replace(/^(\.\.[/\\])+/, '').replace(/^[/\\]+/, '');
+  if (p === '' || p === '.' || p.endsWith('/')) p += 'index.html';
+  // allow-list: only what the game itself needs is public (never .git, docs, scripts, third_party, server, CLAUDE.md ...)
+  if (!/^(index\.html|style\.css|manifest\.webmanifest|sw\.js|THIRD_PARTY_NOTICES\.md|(js|icons|art)\/.+)$/.test(p.split(path.sep).join('/'))) { res.writeHead(404).end(); return; }
   const fp = path.join(ROOT, p);
-  if (!fp.startsWith(ROOT) || fp.startsWith(DATA) || /^(server|docs|\.git|\.claude|third_party|scripts|build|fx|node_modules)(\/|$)/.test(p)) { res.writeHead(404).end(); return; }
+  if (!fp.startsWith(ROOT + path.sep)) { res.writeHead(404).end(); return; }
   fs.readFile(fp, (e, b) => {
     if (e) { res.writeHead(404).end('not found'); return; }
     res.writeHead(200, { 'content-type': MIME[path.extname(fp)] || 'application/octet-stream', 'cache-control': p === 'sw.js' ? 'no-cache' : 'public, max-age=3600' }).end(b);
   });
-}).listen(PORT, () => console.log(`Guild of Ash on http://localhost:${PORT}`));
+}).on('clientError', (e, sock) => { try { sock.end('HTTP/1.1 400 Bad Request\r\n\r\n'); } catch {} }).listen(PORT, () => console.log(`Guild of Ash on http://localhost:${PORT}`));
